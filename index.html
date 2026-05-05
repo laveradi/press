@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LAVERADI — Commit the Truth</title>
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --surface: #141414;
+            --border: #2a2a2a;
+            --text: #e0e0e0;
+            --text-muted: #999;
+            --accent: #ffffff;
+            --red: #e63946;
+            --red-dark: #b71c1c;
+            --max-width: 1200px;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* HEADER */
+        .header {
+            background: var(--bg);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0 20px;
+        }
+        .header-inner {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 56px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text);
+        }
+        .logo-symbol {
+            font-family: 'Courier New', monospace;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--accent);
+            letter-spacing: -2px;
+        }
+        .logo-text {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+        .logo-text .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 22px;
+            background: var(--accent);
+            margin-left: 2px;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 4px;
+            transition: color 0.2s;
+        }
+        .nav a:hover, .nav a.active { color: var(--accent); }
+        .nav .live {
+            color: var(--red);
+            font-weight: 700;
+        }
+        .nav .live::before {
+            content: '';
+            display: inline-block;
+            width: 8px; height: 8px;
+            background: var(--red);
+            border-radius: 50%;
+            margin-right: 6px;
+            animation: blink 1s step-end infinite;
+        }
+
+        /* CONTAINER */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px 40px;
+        }
+
+        /* HERO — 2 colonne */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 30px 0;
+        }
+        .hero-img {
+            width: 100%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .hero-tag {
+            display: inline-block;
+            background: var(--red);
+            color: white;
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+        .hero h2 {
+            font-size: 32px;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            color: var(--accent);
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 16px;
+        }
+        .hero a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        /* SECTION DIVIDER */
+        .section-divider {
+            margin: 30px 0 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-divider span {
+            color: var(--accent);
+            font-size: 16px;
+        }
+
+        /* GRID 4 COLONNE */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .grid-4 .card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        /* GRID 3 COLONNE */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        /* GRID 2+1 */
+        .grid-2-1 {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        .grid-2-1 img {
+            width: 100%;
+            height: 100%;
+            min-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* GRID 1+2 */
+        .grid-1-2 {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .grid-1-2 img {
+            width: 100%;
+            height: 100%;
+            min-height: 250px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* CARD */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 18px;
+            transition: border-color 0.2s;
+        }
+        .card:hover { border-color: var(--text-muted); }
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        .card-tag {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--red);
+            margin-bottom: 8px;
+        }
+        .card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 8px;
+            color: var(--accent);
+        }
+        .card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+        .card a {
+            color: var(--accent);
+            font-size: 12px;
+            font-weight: 600;
+            text-decoration: none;
+        }
+        .card a:hover { text-decoration: underline; }
+
+        /* FEATURED — immagine grande + testo */
+        .featured {
+            display: grid;
+            grid-template-columns: 1fr;
+            margin: 20px 0;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+        .featured img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+        .featured-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 30px;
+        }
+        .featured-overlay h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .featured-overlay p {
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        /* TOP 10 */
+        .top10 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .top10-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 4px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            padding: 20px;
+        }
+        .top10-box h3 {
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+            color: var(--text-muted);
+        }
+        .top10-box ol {
+            list-style: none;
+            counter-reset: top10;
+        }
+        .top10-box ol li {
+            counter-increment: top10;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            display: flex;
+            gap: 10px;
+            align-items: baseline;
+        }
+        .top10-box ol li::before {
+            content: counter(top10);
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: var(--accent);
+            min-width: 20px;
+        }
+        .top10-box ol li a {
+            color: var(--text);
+            text-decoration: none;
+        }
+        .top10-box ol li a:hover { text-decoration: underline; }
+
+        /* FOOTER */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        .footer a { color: var(--text-muted); text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        @media (max-width: 768px) {
+            .hero, .grid-2-1, .grid-1-2 { grid-template-columns: 1fr; }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+            .grid-3 { grid-template-columns: 1fr; }
+            .top10 { grid-template-columns: 1fr; }
+            .nav a { font-size: 12px; padding: 6px 8px; }
+            .logo-text { font-size: 18px; }
+            .featured img { height: 250px; }
+            .hero-img { height: 200px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-inner">
+        <a href="/" class="logo-area">
+            <span class="logo-symbol">{</span>
+            <span class="logo-text">LAVERADI<span class="cursor"></span></span>
+        </a>
+        <nav class="nav">
+            <a href="#" class="live">LIVE</a>
+            <a href="#" class="active">World</a>
+            <a href="#">Politics</a>
+            <a href="#">Investigations</a>
+            <a href="#">Tech</a>
+            <a href="#">Data</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- HERO 2 COLONNE -->
+    <section class="hero">
+        <img class="hero-img" src="https://images.unsplash.com/photo-1504711434969-e33886168a6c?w=800&q=80" alt="War zone report">
+        <div class="hero-content">
+            <span class="hero-tag">Exclusive</span>
+            <h2>U.S.-Iran ceasefire under strain with new attacks near the Strait of Hormuz</h2>
+            <p>Iran fired cruise missiles and drones, and the U.S. used attack helicopters to blow up small boats and intercept the drones, according to U.S. Central Command.</p>
+            <a href="https://www.nbcnews.com/news/world/us-iran-ceasefire-strain-attacks-strait-hormuz-rcna175141" target="_blank">Read full report →</a>
+        </div>
+    </section>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider">
+        <span>{ }</span> Latest News <span>( )</span>
+    </div>
+
+    <!-- GRID 4 COLONNE -->
+    <div class="grid-4">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1559526324-593bc073d938?w=400&q=80" alt="White House">
+            <div class="card-tag">Breaking</div>
+            <h3>Secret Service shoots armed man near White House</h3>
+            <a href="https://www.nbcnews.com/politics/secret-service-shooting-white-house-rcna175140" target="_blank">Read more →</a>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&q=80" alt="Courtroom">
+            <div class="card-tag">Tech</div>
+            <h3>OpenAI co-founder grilled at Musk trial</h3>
+            <a href="https://www.nbcnews.com/tech/tech-news/openai-musk-trial-greg-brockman-rcna175139" target="_blank">Read more →</a>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1548574505-5e239809ee19?w=400&q=80" alt="Cruise ship">
+            <div class="card-tag">Health</div>
+            <h3>Cruise ship with hantavirus refused to dock</h3>
+            <a href="https://www.nbcnews.com/health/health-news/hantavirus-cruise-ship-refused-dock-rcna175138" target="_blank">Read more →</a>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=400&q=80" alt="Dolly Parton">
+            <div class="card-tag">Entertainment</div>
+            <h3>Dolly Parton cancels Vegas residency</h3>
+            <a href="https://www.nbcnews.com/pop-culture/dolly-parton-cancels-las-vegas-residency-health-rcna175137" target="_blank">Read more →</a>
+        </div>
+    </div>
+
+    <!-- SECTION DIVIDER -->
+    <div class="section-divider">
+        <span>{</span> In Depth <span>(</span>
+    </div>
+
+    <!-- FEATURED — IMMAGINE GRANDE -->
+    <section class="featured">
+        <img src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&q=80" alt="Space">
+        <div class="featured-overlay">
+            <h2>Astronomers detect atmosphere around icy world beyond Pluto</h2>
+            <p>Fresh insight into our solar system's farthest, coldest objects in the Kuiper Belt.</p>
+        </div>
+    </section>
+
+    <!-- GRID 3 COLONNE -->
+    <div class="grid-3" style="margin-top:20px;">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=500&q=80" alt="Elections">
+            <div class="card-tag">Politics</div>
+            <h3>Senate bans prediction markets. Is the House next?</h3>
+            <p>After insider trading concerns, the Senate voted to ban members from betting on prediction markets.</p>
+            <a href="https://www.nbcnews.com/politics/senate-prediction-markets-ban-rcna175132" target="_blank">Read more →</a>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=500&q=80" alt="Hormuz">
+            <div class="card-tag">World</div>
+            <h3>'Project Freedom' to guide ships in Strait of Hormuz</h3>
+            <p>New international mission aims to protect commercial vessels in the strategic waterway.</p>
+            <a href="https://www.nbcnews.com/news/world/project-freedom-strait-of-hormuz-rcna175134" target="_blank">Read more →</a>
+        </div>
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1587854692152-cbe660dbde88?w=500&q=80" alt="Virus">
+            <div class="card-tag">Health</div>
+            <h3>What to know about hantavirus after cruise deaths</h3>
+            <p>Three passengers died in a suspected outbreak aboard a cruise ship.</p>
+            <a href="https://www.nbcnews.com/health/what-is-hantavirus-cruise-rcna175131" target="_blank">Read more →</a>
+        </div>
+    </div>
+
+    <!-- 2+1 GRID -->
+    <div class="section-divider">
+        <span>{ }</span> Spotlight <span>( )</span>
+    </div>
+    <div class="grid-2-1">
+        <img src="https://plus.unsplash.com/premium_photo-1664300958188-7b0e0a4e2c2f?w=800&q=80" alt="Investigation">
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+            <div class="card-tag">Investigation</div>
+            <h3>How the Lively-Baldoni dispute impacted both actors' careers</h3>
+            <p>After years of legal battles, the settlement left questions unanswered and careers reshaped.</p>
+            <a href="https://www.nbcnews.com/pop-culture/lively-baldoni-settlement-career-impact-rcna175130" target="_blank">Read more →</a>
+        </div>
+    </div>
+
+    <!-- 1+2 GRID -->
+    <div class="grid-1-2">
+        <div class="card" style="display:flex;flex-direction:column;justify-content:center;">
+            <div class="card-tag">Business</div>
+            <h3>Here's what ultimately led to the collapse of Spirit Airlines</h3>
+            <p>Years of financial turbulence ended in bankruptcy for the low-cost carrier.</p>
+            <a href="https://www.nbcnews.com/business/spirit-airlines-collapse-rcna175129" target="_blank">Read more →</a>
+        </div>
+        <img src="https://images.unsplash.com/photo-1436491865332-7a61a109bb05?w=800&q=80" alt="Airplane">
+    </div>
+
+    <!-- TOP 10 -->
+    <div class="section-divider">
+        <span>{</span> Top 10 This Week <span>(</span>
+    </div>
+    <div class="top10">
+        <div class="top10-box">
+            <h3>{ Most Read }</h3>
+            <ol>
+                <li><a href="#">U.S.-Iran ceasefire under strain near Strait of Hormuz</a></li>
+                <li><a href="#">Secret Service shoots armed man near White House</a></li>
+                <li><a href="#">OpenAI co-founder grilled at Musk trial</a></li>
+                <li><a href="#">Hantavirus cruise ship refused to dock</a></li>
+                <li><a href="#">Dolly Parton cancels Vegas residency</a></li>
+                <li><a href="#">Atmosphere detected around icy world beyond Pluto</a></li>
+                <li><a href="#">'Project Freedom' Hormuz mission</a></li>
+                <li><a href="#">Rudy Giuliani hospitalized in critical condition</a></li>
+                <li><a href="#">Senate bans prediction markets</a></li>
+                <li><a href="#">Spirit Airlines collapse explained</a></li>
+            </ol>
+        </div>
+        <div class="top10-box">
+            <h3>( Editor's Picks )</h3>
+            <ol>
+                <li><a href="#">Inside the secret Iran peace talks</a></li>
+                <li><a href="#">Chinese EVs compete with U.S. cars in Beijing</a></li>
+                <li><a href="#">West Bank settler violence after Oct. 7</a></li>
+                <li><a href="#">Kentucky Derby history-making trainer</a></li>
+                <li><a href="#">Iridescent rainbow cloud spotted in Indonesia</a></li>
+                <li><a href="#">Britney Spears DUI plea deal</a></li>
+                <li><a href="#">Supreme Court restores abortion pill access</a></li>
+                <li><a href="#">Met Gala 2026: All the looks</a></li>
+                <li><a href="#">Madonna stuns in Saint Laurent</a></li>
+                <li><a href="#">United plane strikes pole at Newark</a></li>
+            </ol>
+        </div>
+    </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <p>© 2026 <strong>LAVERADI</strong> — Commit the Truth.</p>
+    <p style="margin-top:6px;">Sources: <a href="https://www.nbcnews.com" target="_blank">NBC News</a>, <a href="https://unsplash.com" target="_blank">Unsplash</a>. All rights belong to their respective owners.</p>
+</footer>
+
+</body>
+</html>
